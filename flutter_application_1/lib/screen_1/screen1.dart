@@ -10,10 +10,16 @@ class screenA extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
+        backgroundColor: Colors.blue,
         appBar: AppBar(
           title: Text('Registration'),
           centerTitle: true,
-          actions: <Widget>[Icon(Icons.shopping_cart), Icon(Icons.search)],
+          backgroundColor: Colors.blue.shade900,
+          actions: <Widget>[
+            Icon(Icons.shopping_cart),
+            SizedBox(width: 20),
+            Icon(Icons.search)
+          ],
         ),
         drawer: Drawer(
           child: ListView(
@@ -38,11 +44,17 @@ class screenA extends StatelessWidget {
         ),
         body: Center(
           child: Container(
-            child: TextField(
-              decoration: InputDecoration(
-                  border: InputBorder.none,
-                  labelText: 'Name',
-                  hintText: 'enter your name'),
+            width: 100,
+            decoration: BoxDecoration(
+                border: Border.all(color: Colors.white, width: 2)),
+            child: Padding(
+              padding: const EdgeInsets.only(left: 5.0, right: 5.0),
+              child: TextField(
+                decoration: InputDecoration(
+                    border: InputBorder.none,
+                    labelText: 'Name',
+                    hintText: 'enter your name'),
+              ),
             ),
           ),
         ),

@@ -37,7 +37,7 @@ class Button extends StatelessWidget {
         },
         child: Text('welcome to screen A'),
         style: ElevatedButton.styleFrom(
-            primary: Colors.purple,
+            primary: Colors.blue[900],
             padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
             textStyle: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
       )),

@@ -1,179 +1,262 @@
+//import 'package:calculatorapp/CalculatorApp.dart';
+//import 'package:math_expressions/math_expressions.dart';
+
 import 'package:flutter/material.dart';
 
-void main() => runApp(MyApp());
-
-class MyApp extends StatefulWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  @override
-  _MyAppState createState() => _MyAppState();
+void main() {
+  runApp(const MyApp());
 }
 
-class _MyAppState extends State<MyApp> {
-  String output = '0';
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Calculator Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: const MyHomePage(title: 'Calculator App'),
+    );
+  }
+}
 
-  String _output = '0';
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({Key? key, required this.title}) : super(key: key);
+  final String title;
 
-  double num1 = 0;
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
 
-  double num2 = 0;
+class _MyHomePageState extends State<MyHomePage> {
 
-  String operand = '';
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Calculator()
 
-  Operation(String btntxt) {
-    if (btntxt == 'AC') {
-      _output = '0';
-      num2 = 0;
-      num1 = 0;
-      operand = '';
-    } else if (btntxt == '+' ||
-        btntxt == '-' ||
-        btntxt == 'x' ||
-        btntxt == '/') {
-      num1 = double.parse(output);
-      operand = btntxt;
-      _output = '0';
-    } else if (btntxt == '=') {
-      num2 = double.parse(output);
+    );
+  }
+}
 
-      if (operand == '+') {
-        _output = (num1 + num2).toString();
-      }
-      if (operand == '-') {
-        _output = (num1 - num2).toString();
-      }
-      if (operand == 'x') {
-        _output = (num1 * num2).toString();
-      }
-      if (operand == '/') {
-        _output = (num1 / num2).toString();
-      }
-      num1 = 0;
-      num2 = 0;
-      operand = '';
-    } else {
-      _output = _output + btntxt;
-    }
+
+class Calculator extends StatefulWidget {
+  @override
+  _CalculatorState createState() => _CalculatorState();
+}
+
+class _CalculatorState extends State<Calculator> {
+  var result = "";
+
+  Widget Button(btn) {
+    return Container(
+      width: 80,
+      height: 60,
+      margin: EdgeInsets.all(0),
+      padding: EdgeInsets.all(5),
+      child: ElevatedButton.icon(
+        label: Text(
+          btn,
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.w900),
+        ),
+        icon: Icon(Icons.calculate),
+        style: ElevatedButton.styleFrom(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10), // <-- Radius
+          ),
+          shadowColor: Colors.grey,
+          primary: Colors.black,
+          onPrimary: Colors.white,
+          side: BorderSide(color: Colors.black, width: 3),
+        ),
+        onPressed: () {
+          setState(() {
+            result = result + btn;
+          });
+        },
+      ),
+    );
+  }
+
+  clear() {
     setState(() {
-      output = int.parse(_output).toString();
+      result = "";
     });
   }
 
-  Widget button(String btntxt) {
-    return Expanded(
-      child: RawMaterialButton(
-        child: Text(
-          btntxt,
-          style: TextStyle(fontSize: 20, color: Colors.white),
-        ),
-        onPressed: () {
-          Operation(btntxt);
-        },
-        shape: Border.all(
-            color: Colors.white, width: 2.5, style: BorderStyle.solid),
-        fillColor: Colors.black,
-        padding: EdgeInsets.all(20),
-        splashColor: Colors.grey,
-      ),
-    );
+  Output() {
+    Parser p = Parser();
+    Expression exp = p.parse(result);
+    ContextModel cm = ContextModel();
+    double eval = exp.evaluate(EvaluationType.REAL, cm);
+
+    setState(() {
+      result = eval.toString();
+    });
   }
 
   @override
-  Widget build(context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'CALCULATOR',
-      home: Scaffold(
-        backgroundColor: Colors.blue[900],
-        appBar: AppBar(
-          backgroundColor: Colors.indigo[900],
-          title: Text('Calculator',
-              style: TextStyle(
-                fontFamily: 'huzaifa',
-                fontSize: 30.0,
-                fontWeight: FontWeight.bold,
-                fontStyle: FontStyle.normal,
-              )),
-        ),
-        body: Center(
+  Widget build(BuildContext context) {
+    return Scaffold(
+        body: SingleChildScrollView(
           child: Container(
-            height: 600,
-            width: 400,
-            color: Colors.grey[900],
-            margin: EdgeInsets.only(left: 100, right: 100),
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
+            padding: EdgeInsets.all(15),
+            decoration: BoxDecoration(
+                color: Colors.grey[300],
+                borderRadius: BorderRadius.circular(10),
+            ),
+              child: Container(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.black,
+                  borderRadius: BorderRadius.circular(100)
+                ),
+                child: CircleAvatar(
+                  radius: 100,
+                  backgroundImage: NetworkImage("https://w7.pngwing.com/pngs/486/222/png-transparent-computer-icons-calculator-calculation-calculator-blue-electronics-logo.png")
+                ),
+              ),
+            SizedBox(height: 30,),
+              Container(
+                height: 70,
+                width: 400,
+                child: Center(
+                  child: Text(
+                    result,
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        fontFamily: "serif",
+                        fontSize: 20),
+                  ),
+                ),
+                decoration: BoxDecoration(
+                  color: Colors.black,
+                  borderRadius: BorderRadius.circular(15),
+                ),
+              ),
+              SizedBox(height: 10,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Expanded(
-                      child: Container(
-                    alignment: Alignment.bottomRight,
-                    decoration: BoxDecoration(
-                        color: Colors.black54,
-                        border: Border.all(color: Colors.white, width: 2.5)),
-                    margin: EdgeInsets.only(bottom: 5),
-                    child: Text(
-                      output,
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 50,
-                          fontWeight: FontWeight.bold),
+                  Container(
+                    width: 80,
+                    height: 60,
+                    margin: EdgeInsets.all(0),
+                    padding: EdgeInsets.all(5),
+                    child: ElevatedButton.icon(
+                      label: Text(
+                        "AC",
+                        style: TextStyle(fontWeight: FontWeight.w900),
+                      ),
+                      icon: Icon(Icons.calculate),
+                      style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10), // <-- Radius
+                        ),
+                        shadowColor: Colors.grey,
+                        primary: Colors.red,
+                        onPrimary: Colors.white,
+                        side: BorderSide(color: Colors.red, width: 3),
+                      ),
+                      onPressed: () {
+                        clear();
+                      },
                     ),
-                    padding: EdgeInsets.all(20),
-                  )),
-                  Row(
-                    children: [
-                      button('7'),
-                      SizedBox(width: 7),
-                      button('8'),
-                      SizedBox(width: 7),
-                      button('9'),
-                      SizedBox(width: 7),
-                      button('/'),
-                    ],
                   ),
-                  SizedBox(height: 10),
-                  Row(
-                    children: [
-                      button('4'),
-                      SizedBox(width: 7),
-                      button('5'),
-                      SizedBox(width: 7),
-                      button('6'),
-                      SizedBox(width: 7),
-                      button('x'),
-                    ],
-                  ),
-                  SizedBox(height: 10),
-                  Row(
-                    children: [
-                      button('1'),
-                      SizedBox(width: 7),
-                      button('2'),
-                      SizedBox(width: 7),
-                      button('3'),
-                      SizedBox(width: 7),
-                      button('-'),
-                    ],
-                  ),
-                  SizedBox(height: 10),
-                  Row(
-                    children: [
-                      button('0'),
-                      SizedBox(width: 7),
-                      button('AC'),
-                      SizedBox(width: 7),
-                      button('='),
-                      SizedBox(width: 7),
-                      button('+'),
-                    ],
+                  Button("("),
+                  Button(")"),
+                  Container(
+                    width: 80,
+                    height: 60,
+                    margin: EdgeInsets.all(0),
+                    padding: EdgeInsets.all(5),
+                    child: ElevatedButton.icon(
+                      label: Text(
+                        "=",
+                        style: TextStyle(fontWeight: FontWeight.w900),
+                      ),
+                      icon: Icon(Icons.calculate),
+                      style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10), // <-- Radius
+                        ),
+                        shadowColor: Colors.grey,
+                        primary: Colors.green,
+                        onPrimary: Colors.white,
+                        side: BorderSide(color: Colors.green, width: 3),
+                      ),
+                      onPressed: () {
+                        Output();
+                      },
+                    ),
                   ),
                 ],
               ),
-            ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Button("1"),
+                  Button("2"),
+                  Button("3"),
+                  Button("%"),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Button("4"),
+                  Button("5"),
+                  Button("6"),
+                  Button("/"),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Button("7"),
+                  Button("8"),
+                  Button("9"),
+                  Button("*"),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Button("."),
+                  Button("0"),
+                  Button("+"),
+                  Button("-"),
+                ],
+              )
+            ],
           ),
-        ),
-      ),
-    );
+              ),
+            ),
+        ));
   }
+
+  Parser() {}
+}
+
+class Parser {
+}
+
+mixin `Parser {
+}
+
+mixin EvaluationType {
+  static var REAL;
+}
+
+mixin ContextModel {
+}
+
+mixin Expression {
+  double evaluate(real, ContextModel cm) {}
 }
