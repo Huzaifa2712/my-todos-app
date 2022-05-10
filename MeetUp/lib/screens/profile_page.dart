@@ -12,13 +12,16 @@ class _profilepageState extends State<profilepage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: header(context),
+      // appBar: header(context),
       body: Container(
         child: const Center(
           child: Text(
             'profile page',
             style: TextStyle(
-                fontSize: 30, fontStyle: FontStyle.italic, color: Colors.white),
+                fontFamily: 'DancingScript',
+                fontSize: 50,
+                fontStyle: FontStyle.italic,
+                color: Colors.white),
           ),
         ),
         color: Colors.black87,

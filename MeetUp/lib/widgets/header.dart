@@ -9,7 +9,8 @@ AppBar header(context) {
     title: const Text(
       'MeetUp',
       style: TextStyle(
-          fontSize: 30,
+          fontFamily: 'DancingScript',
+          fontSize: 38,
           fontStyle: FontStyle.italic,
           fontWeight: FontWeight.bold,
           color: Colors.white),

@@ -1,14 +1,14 @@
 import 'package:connecting_hearrts/widgets/header.dart';
 import 'package:flutter/material.dart';
 
-class homepage extends StatefulWidget {
-  const homepage({Key? key}) : super(key: key);
+class activitypage extends StatefulWidget {
+  const activitypage({Key? key}) : super(key: key);
 
   @override
-  State<homepage> createState() => _homepageState();
+  State<activitypage> createState() => _activitypageState();
 }
 
-class _homepageState extends State<homepage> {
+class _activitypageState extends State<activitypage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,7 +16,7 @@ class _homepageState extends State<homepage> {
       body: Container(
         child: const Center(
           child: Text(
-            'home page',
+            'activity page',
             style: TextStyle(
                 fontFamily: 'DancingScript',
                 fontSize: 50,

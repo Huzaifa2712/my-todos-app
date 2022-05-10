@@ -1,24 +1,26 @@
-import 'package:connecting_hearrts/screens/feed_page.dart';
+import 'package:connecting_hearrts/screens/activity_page.dart';
 import 'package:connecting_hearrts/screens/home_page.dart';
 import 'package:connecting_hearrts/screens/message_page.dart';
 import 'package:connecting_hearrts/screens/profile_page.dart';
+import 'package:connecting_hearrts/screens/search_page.dart';
 import 'package:connecting_hearrts/widgets/header.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 
-class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+class MainPage extends StatefulWidget {
+  const MainPage({Key? key}) : super(key: key);
 
   @override
-  State<Home> createState() => _HomeState();
+  State<MainPage> createState() => _MainPageState();
 }
 
-class _HomeState extends State<Home> {
+class _MainPageState extends State<MainPage> {
   int currentIndex = 0;
   final screens = [
     const homepage(),
     const message(),
-    const feedpage(),
+    const search(),
+    const activitypage(),
     const profilepage(),
   ];
 
@@ -32,12 +34,11 @@ class _HomeState extends State<Home> {
         backgroundColor: Colors.white,
         buttonBackgroundColor: Colors.white,
         items: const [
-          Icon(
-            Icons.home,
-          ),
+          Icon(Icons.home),
+          Icon(Icons.message),
+          Icon(Icons.search),
           Icon(Icons.favorite),
           Icon(Icons.person),
-          Icon(Icons.message)
         ],
         onTap: (index) => setState(() => currentIndex = index),
         animationDuration: const Duration(
