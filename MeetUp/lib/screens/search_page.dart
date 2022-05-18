@@ -16,6 +16,7 @@ class _searchState extends State<search> {
         padding: const EdgeInsets.all(8.0),
         child: TextFormField(
           decoration: const InputDecoration(
+            fillColor: Colors.black26,
             hintText: 'Search',
             filled: true,
             prefixIcon: Icon(Icons.search),
