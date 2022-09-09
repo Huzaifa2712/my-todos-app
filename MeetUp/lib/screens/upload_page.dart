@@ -1,12 +1,10 @@
 import 'dart:html';
 
+import 'package:connecting_hearrts/widgets/header.dart';
 import 'package:image_picker/image_picker.dart';
-
 import 'package:flutter/material.dart';
 
 class uploadpage extends StatefulWidget {
-  const uploadpage({Key? key}) : super(key: key);
-
   @override
   State<uploadpage> createState() => _uploadpageState();
 }
@@ -62,6 +60,7 @@ class _uploadpageState extends State<uploadpage> {
 
   Widget uploadScreen() {
     return Scaffold(
+      appBar: header(context),
       body: Container(
         color: Colors.black87,
         child: Center(
@@ -88,16 +87,48 @@ class _uploadpageState extends State<uploadpage> {
     );
   }
 
+  clearScreen() {
+    setState(() {
+      file = null;
+    });
+  }
+
   Scaffold uploadForm() {
-    return const Scaffold(
-      body: Center(
-        child: Text(
-          'photo uploaded',
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        leading: IconButton(
+          onPressed: () => clearScreen(),
+          icon: const Icon(Icons.arrow_back),
+          color: Colors.white,
+        ),
+        centerTitle: true,
+        title: const Text(
+          'Caption Post',
           style: TextStyle(
-            fontSize: 40,
+            color: Colors.white,
+            fontFamily: 'DancingScript',
+            fontSize: 45,
           ),
         ),
+        actions: [
+          TextButton(
+            onPressed: () => print('pressed'),
+            child: const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Text(
+                'Post',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                  fontSize: 20,
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
+      body: Container(color: Colors.grey),
     );
   }
 

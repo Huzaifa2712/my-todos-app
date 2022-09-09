@@ -2,6 +2,7 @@
 # analyze.py
 # main program for lexical analysis
 
+from ast import keyword
 from asyncore import read
 import imp
 from itertools import count
@@ -13,7 +14,7 @@ from ID import is_ID
 
 
 # Define the program file that needs to be opened for analysis
-
+keyword = ['int', 'print', 'input', 'float', 'string']
 workfile = input("Enter Python file (.py) fullname: ")
 
 
@@ -91,7 +92,7 @@ skip = False
 # Set up a counter to print the internal code
 
 count = 0
-a = ("<Category , Words , line number>")
+a = ("<value part , class part , line number>")
 print(a)
 # print(a)
 # Line-by-line analysis of the program in the file
@@ -115,6 +116,8 @@ for line in lines:
         if not skip:
             if is_punc(item):
                 try:
+                    if keyword(item, count):
+                        print(keyword, 'is keyword')
                     if is_punc(item + final[c+1]):
                         print('\n',a)
 

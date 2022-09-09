@@ -4,7 +4,6 @@ import 'package:connecting_hearrts/screens/message_page.dart';
 import 'package:connecting_hearrts/screens/profile_page.dart';
 import 'package:connecting_hearrts/screens/search_page.dart';
 import 'package:connecting_hearrts/screens/upload_page.dart';
-import 'package:connecting_hearrts/screens/upload_page.dart';
 import 'package:connecting_hearrts/widgets/header.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +21,7 @@ class _MainPageState extends State<MainPage> {
     const homepage(),
     const message(),
     const search(),
-    const uploadpage(),
+    uploadpage(),
     const activitypage(),
     const profilepage(),
   ];
